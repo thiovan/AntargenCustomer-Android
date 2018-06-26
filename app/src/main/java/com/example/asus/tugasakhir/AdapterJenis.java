@@ -1,16 +1,12 @@
 package com.example.asus.tugasakhir;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -31,7 +27,7 @@ public class AdapterJenis extends RecyclerView.Adapter<AdapterJenis.ViewHolder> 
     @Override
     public AdapterJenis.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.isi_makanan, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.produk_item, parent, false);
         return new ViewHolder(view);
     }
 

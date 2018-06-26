@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by ASUS on 6/4/2018.
  */
 
-public class LoginResult {
+public class LoginResponse {
     @SerializedName("data")
     @Expose
     public Login data;
