@@ -1,6 +1,6 @@
 package com.example.asus.tugasakhir.network;
 
-import com.example.asus.tugasakhir.models.LoginResult;
+import com.example.asus.tugasakhir.models.LoginResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -14,7 +14,7 @@ import retrofit2.http.POST;
 public interface APIService {
    @FormUrlEncoded
     @POST("api/auth/login")
-    Call<LoginResult> userLogin(
+    Call<LoginResponse> userLogin(
             @Field("email") String email,
             @Field("password") String password);
 }

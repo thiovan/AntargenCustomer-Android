@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RetrofitClient {
-    public static final String BASE_URL = "http://192.168.137.1/delivery/public/";
+    public static final String BASE_URL = "http://antargen.ktpsapi.com/public/";
     private static Retrofit retrofit = null;
     // variable to hold context
     private static Context context;
