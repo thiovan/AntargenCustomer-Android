@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_margin="10dp"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/gambar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_home_black_24dp"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:id="@+id/Nama_Produk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sabun"
+            android:layout_below="@+id/gambar"
+            android:layout_centerHorizontal="true"/>
+        <TextView
+            android:id="@+id/Harga"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5000"
+            android:layout_below="@+id/Nama_Produk"
+            android:layout_centerHorizontal="true"/>
+        <TextView
+            android:id="@+id/Stok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stok"
+            android:layout_below="@+id/Harga"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
