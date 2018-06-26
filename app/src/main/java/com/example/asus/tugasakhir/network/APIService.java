@@ -20,6 +20,18 @@ public interface APIService {
             @Field("email") String email,
             @Field("password") String password);
 
+    @GET("api/produk")
+    Call<ProdukResponse> getProduk();
+
     @GET("api/makanan")
     Call<ProdukResponse> getMakanan();
+
+    @GET("api/minuman")
+    Call<ProdukResponse> getMinuman();
+
+    @GET("api/kesehatan")
+    Call<ProdukResponse> getKesehatan();
+
+    @GET("api/krt")
+    Call<ProdukResponse> getKrt();
 }
