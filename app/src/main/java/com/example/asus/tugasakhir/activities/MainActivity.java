@@ -1,5 +1,6 @@
 package com.example.asus.tugasakhir.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -100,7 +101,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_cart) {
+            Intent intent = new Intent(MainActivity.this, TroliActivity.class);
+            startActivity(intent);
             return true;
         }
 
