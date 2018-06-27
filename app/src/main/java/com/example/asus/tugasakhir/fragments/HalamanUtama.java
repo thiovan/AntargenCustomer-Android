@@ -1,12 +1,10 @@
-package com.example.asus.tugasakhir;
+package com.example.asus.tugasakhir.fragments;
 
-import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -15,12 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.asus.tugasakhir.R;
 import com.example.asus.tugasakhir.adapter.ProdukAdapter;
 import com.example.asus.tugasakhir.models.Produk;
 import com.example.asus.tugasakhir.models.ProdukResponse;
 import com.example.asus.tugasakhir.network.APIService;
 import com.example.asus.tugasakhir.network.RetrofitClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -31,6 +31,7 @@ public class HalamanUtama extends Fragment implements SwipeRefreshLayout.OnRefre
     private RecyclerView recyclerView;
     private ProdukAdapter adapter;
     SwipeRefreshLayout swipeRefreshLayout;
+    List<Produk> produks = new ArrayList<>();
 
     @Nullable
     @Override
@@ -47,6 +48,7 @@ public class HalamanUtama extends Fragment implements SwipeRefreshLayout.OnRefre
         //you can set the title for your toolbar here for different fragments different titles
         getActivity().setTitle("Home");
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
+        swipeRefreshLayout.setOnRefreshListener(this);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.card_recycle_view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -54,12 +56,8 @@ public class HalamanUtama extends Fragment implements SwipeRefreshLayout.OnRefre
         gridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL) {
-            @Override
-            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-                // Do not draw the divider
-            }
-        });
+        adapter = new ProdukAdapter(produks);
+        recyclerView.setAdapter(adapter);
 
         loadProduk();
     }
@@ -74,9 +72,10 @@ public class HalamanUtama extends Fragment implements SwipeRefreshLayout.OnRefre
             public void onResponse(Call<ProdukResponse> call, Response<ProdukResponse> response) {
                 if (isAdded() && response.isSuccessful()) {
                     swipeRefreshLayout.setRefreshing(false);
-                    List<Produk> produks = response.body().getProduks();
-                    adapter = new ProdukAdapter(produks);
-                    recyclerView.setAdapter(adapter);
+                    produks.clear();
+                    produks.addAll(response.body().getProduks());
+                    adapter.notifyDataSetChanged();
+
                 }
             }
 

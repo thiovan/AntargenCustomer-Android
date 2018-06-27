@@ -1,4 +1,4 @@
-package com.example.asus.tugasakhir;
+package com.example.asus.tugasakhir.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.example.asus.tugasakhir.R;
 
 public class splashscreen extends AppCompatActivity {
 

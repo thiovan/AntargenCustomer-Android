@@ -1,4 +1,4 @@
-package com.example.asus.tugasakhir;
+package com.example.asus.tugasakhir.activities;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +12,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.example.asus.tugasakhir.R;
+import com.example.asus.tugasakhir.fragments.HalamanKRT;
+import com.example.asus.tugasakhir.fragments.HalamanKesehatan;
+import com.example.asus.tugasakhir.fragments.HalamanMakanan;
+import com.example.asus.tugasakhir.fragments.HalamanMinuman;
+import com.example.asus.tugasakhir.fragments.HalamanUtama;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

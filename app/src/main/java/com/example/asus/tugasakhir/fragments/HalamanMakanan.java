@@ -1,4 +1,4 @@
-package com.example.asus.tugasakhir;
+package com.example.asus.tugasakhir.fragments;
 
 import android.graphics.Canvas;
 import android.os.Bundle;
@@ -15,40 +15,42 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.asus.tugasakhir.R;
 import com.example.asus.tugasakhir.adapter.ProdukAdapter;
 import com.example.asus.tugasakhir.models.Produk;
 import com.example.asus.tugasakhir.models.ProdukResponse;
 import com.example.asus.tugasakhir.network.APIService;
 import com.example.asus.tugasakhir.network.RetrofitClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
-public class HalamanKesehatan extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class HalamanMakanan extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView recyclerView;
     private ProdukAdapter adapter;
     SwipeRefreshLayout swipeRefreshLayout;
+    List<Produk> produks = new ArrayList<>();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //returning our layout file
         //change R.layout.yourlayoutfilename for each of your fragments
-        return inflater.inflate(R.layout.fragment_halaman_kesehatan, container, false);
+        return inflater.inflate(R.layout.activity_halaman_makanan, container, false);
     }
 
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //you can set the title for your toolbar here for different fragments different titles
-        getActivity().setTitle("Kesehatan");
-
+        getActivity().setTitle("Makanan");
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
+        swipeRefreshLayout.setOnRefreshListener(this);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.card_recycle_view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -62,38 +64,40 @@ public class HalamanKesehatan extends Fragment implements SwipeRefreshLayout.OnR
                 // Do not draw the divider
             }
         });
+        adapter = new ProdukAdapter(produks);
+        recyclerView.setAdapter(adapter);
 
-        loadKesehatan();
+        loadMakanan();
     }
 
-    private void loadKesehatan() {
+    private void loadMakanan() {
         swipeRefreshLayout.setRefreshing(true);
         APIService service = RetrofitClient.getClient().create(APIService.class);
-        Call<ProdukResponse> userCall = service.getKesehatan();
+        Call<ProdukResponse> userCall = service.getMakanan();
 
-        userCall.enqueue(new Callback<ProdukResponse>() {
-            @Override
-            public void onResponse(Call<ProdukResponse> call, Response<ProdukResponse> response) {
-                if (isAdded() && response.isSuccessful()) {
-                    swipeRefreshLayout.setRefreshing(false);
-                    List<Produk> produks = response.body().getProduks();
-                    adapter = new ProdukAdapter(produks);
-                    recyclerView.setAdapter(adapter);
-                }
-            }
+       userCall.enqueue(new Callback<ProdukResponse>() {
+           @Override
+           public void onResponse(Call<ProdukResponse> call, Response<ProdukResponse> response) {
+               if (isAdded() && response.isSuccessful()) {
+                   swipeRefreshLayout.setRefreshing(false);
+                   produks.clear();
+                   produks.addAll(response.body().getProduks());
+                   adapter.notifyDataSetChanged();
+               }
+           }
 
-            @Override
-            public void onFailure(Call<ProdukResponse> call, Throwable t) {
-                if (isAdded()) {
-                    swipeRefreshLayout.setRefreshing(false);
-                    Toast.makeText(getActivity(), "Gagal Terhubung Ke Server", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+           @Override
+           public void onFailure(Call<ProdukResponse> call, Throwable t) {
+               if (isAdded()) {
+                   swipeRefreshLayout.setRefreshing(false);
+                   Toast.makeText(getActivity(), "Gagal Terhubung Ke Server", Toast.LENGTH_SHORT).show();
+               }
+           }
+       });
     }
 
     @Override
     public void onRefresh() {
-        loadKesehatan();
+        loadMakanan();
     }
 }

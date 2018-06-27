@@ -1,4 +1,4 @@
-package com.example.asus.tugasakhir;
+package com.example.asus.tugasakhir.fragments;
 
 import android.graphics.Canvas;
 import android.os.Bundle;
@@ -15,12 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.asus.tugasakhir.R;
 import com.example.asus.tugasakhir.adapter.ProdukAdapter;
 import com.example.asus.tugasakhir.models.Produk;
 import com.example.asus.tugasakhir.models.ProdukResponse;
 import com.example.asus.tugasakhir.network.APIService;
 import com.example.asus.tugasakhir.network.RetrofitClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -32,6 +34,8 @@ public class HalamanMinuman extends Fragment implements SwipeRefreshLayout.OnRef
     private RecyclerView recyclerView;
     private ProdukAdapter adapter;
     SwipeRefreshLayout swipeRefreshLayout;
+    List<Produk> produks = new ArrayList<>();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -48,6 +52,7 @@ public class HalamanMinuman extends Fragment implements SwipeRefreshLayout.OnRef
         getActivity().setTitle("Minuman");
 
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
+        swipeRefreshLayout.setOnRefreshListener(this);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.card_recycle_view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -61,6 +66,8 @@ public class HalamanMinuman extends Fragment implements SwipeRefreshLayout.OnRef
                 // Do not draw the divider
             }
         });
+        adapter = new ProdukAdapter(produks);
+        recyclerView.setAdapter(adapter);
 
         loadMinuman();
     }
@@ -75,9 +82,9 @@ public class HalamanMinuman extends Fragment implements SwipeRefreshLayout.OnRef
             public void onResponse(Call<ProdukResponse> call, Response<ProdukResponse> response) {
                 if (isAdded() && response.isSuccessful()) {
                     swipeRefreshLayout.setRefreshing(false);
-                    List<Produk> produks = response.body().getProduks();
-                    adapter = new ProdukAdapter(produks);
-                    recyclerView.setAdapter(adapter);
+                    produks.clear();
+                    produks.addAll(response.body().getProduks());
+                    adapter.notifyDataSetChanged();
                 }
             }
 

@@ -15,7 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".splashscreen">
+        <activity android:name=".activities.splashscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,13 +23,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".loginutama" />
-        <activity android:name=".HalamanUtama" />
-        <activity android:name=".HalamanMakanan" />
-        <activity android:name=".HalamanMinuman"></activity>
+        <activity android:name=".activities.loginutama" />
+        <activity android:name=".fragments.HalamanUtama" />
+        <activity android:name=".fragments.HalamanMakanan" />
+        <activity android:name=".fragments.HalamanMinuman"></activity>
     </application>
 
 </manifest>
