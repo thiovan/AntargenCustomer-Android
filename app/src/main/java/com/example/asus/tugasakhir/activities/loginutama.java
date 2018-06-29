@@ -25,38 +25,52 @@ public class loginutama extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loginutama);
 
+        //Cek apakah sudah login, jika sudah maka langsung diarahkan ke MainActivity
         if (isLogin()){
+            //Intent untuk pindah activity ke MainActivity
             Intent intent = new Intent(loginutama.this,MainActivity.class);
             startActivity(intent);
             finish();
         }
+
+        //Deklarasi view pada layout
         email=(TextView)findViewById(R.id.txt_email);
         password=(TextView) findViewById(R.id.txt_password);
     }
 
     public void MainActivity (View view) {
+        //Memanggil fungsi login
         login(email.getText().toString(),password.getText().toString());
     }
 
+    //Fungsi login dengan parameter inputan user berupa email dan password
     public void login(String email,String password) {
+        //Retrofit call
         APIService service = RetrofitClient.getClient().create(APIService.class);
         Call<LoginResponse> userCall = service.userLogin(email, password);
 
         userCall.enqueue(new Callback<LoginResponse>() {
+            //Fungsi ini akan dieksekusi ketika ada respon dari server
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-
+                //Cek apakah kode respon server 401
                 if (response.code()==401) {
                     Toast.makeText(loginutama.this, "Login Gagal", Toast.LENGTH_SHORT).show();
                 } else {
+                    //Ambil data dari respon server
                     Login login = response.body().getData();
+
+                    //Memanggil fungsi simpan session login dengan parameter nama dan email
                     saveSession(login.getName(), login.getEmail());
+
+                    //Intent untuk pindah activity ke MainActivity
                     Intent intent = new Intent(loginutama.this,MainActivity.class);
                     startActivity(intent);
                     finish();
                 }
             }
 
+            //Fungsi ini akan dieksekusi ketika tidak dapat terhubung ke server
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Toast.makeText(loginutama.this, "Gagal Terhubung ke Server", Toast.LENGTH_SHORT).show();
@@ -64,6 +78,7 @@ public class loginutama extends AppCompatActivity {
         });
     }
 
+    //Fungsi simpan session login ke shared preference
     public void saveSession(String name, String email){
         SharedPreferences.Editor editor = getSharedPreferences("SESSION", MODE_PRIVATE).edit();
         editor.putString("NAME", name );
@@ -71,6 +86,8 @@ public class loginutama extends AppCompatActivity {
         editor.apply();
     }
 
+    //Fungsi check session login
+    //Return true ketika session login tidak kosong
     public boolean isLogin (){
         SharedPreferences preferences = getSharedPreferences("SESSION",MODE_PRIVATE);
         return !preferences.getString("EMAIL", "").equals("");

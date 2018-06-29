@@ -32,6 +32,7 @@ import retrofit2.Response;
 
 public class HalamanKesehatan extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    //Deklarasi variabel global
     private RecyclerView recyclerView;
     private ProdukAdapter adapter;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -52,9 +53,11 @@ public class HalamanKesehatan extends Fragment implements SwipeRefreshLayout.OnR
         //you can set the title for your toolbar here for different fragments different titles
         getActivity().setTitle("Kesehatan");
 
+        //Deklarasi swipe refresh layout
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setOnRefreshListener(this);
 
+        //Deklarasi dan konfigurasi recyclerview
         recyclerView = (RecyclerView) view.findViewById(R.id.card_recycle_view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
@@ -70,28 +73,39 @@ public class HalamanKesehatan extends Fragment implements SwipeRefreshLayout.OnR
         adapter = new ProdukAdapter(produks);
         recyclerView.setAdapter(adapter);
 
+        //Memanggil fungsi loadKesehatan
         loadKesehatan();
     }
 
+    //Fungsi ambil data produk kesehatan dari server kemudian tampilkan di recyclerview
     private void loadKesehatan() {
+        //Tampilkan loading
         swipeRefreshLayout.setRefreshing(true);
+
+        //Retrofit call
         APIService service = RetrofitClient.getClient().create(APIService.class);
         Call<ProdukResponse> userCall = service.getKesehatan();
 
         userCall.enqueue(new Callback<ProdukResponse>() {
+            //Fungsi ini akan dieksekusi ketika ada respon dari server
             @Override
             public void onResponse(Call<ProdukResponse> call, Response<ProdukResponse> response) {
                 if (isAdded() && response.isSuccessful()) {
+                    //Sembunyikan loading
                     swipeRefreshLayout.setRefreshing(false);
+
+                    //Tampilkan data produk kesehatan ke recyclerview
                     produks.clear();
                     produks.addAll(response.body().getProduks());
                     adapter.notifyDataSetChanged();
                 }
             }
 
+            //Fungsi ini akan dieksekusi ketika tidak dapat terhubung ke server
             @Override
             public void onFailure(Call<ProdukResponse> call, Throwable t) {
                 if (isAdded()) {
+                    //Sembunyikan loading dan tampilkan toast
                     swipeRefreshLayout.setRefreshing(false);
                     Toast.makeText(getActivity(), "Gagal Terhubung Ke Server", Toast.LENGTH_SHORT).show();
                 }

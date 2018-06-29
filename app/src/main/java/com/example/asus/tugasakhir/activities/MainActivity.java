@@ -47,7 +47,10 @@ public class MainActivity extends AppCompatActivity
 
         displaySelectedScreen(R.id.nav_utama);
 
+        //Ambil session login dari shared preference
         SharedPreferences preferences = getSharedPreferences("SESSION",MODE_PRIVATE);
+
+        //Ubah TextView header sesuai nama dan email di session login
         View headerView = navigationView.getHeaderView(0);
         TextView headerNama = (TextView) headerView.findViewById(R.id.header_nama);
         TextView headerEmail = (TextView) headerView.findViewById(R.id.header_email);
@@ -73,11 +76,16 @@ public class MainActivity extends AppCompatActivity
                 fragment = new HalamanKesehatan();
                 break;
             case R.id.nav_logout:
+                //Hapus session login dari shared preference
                 SharedPreferences.Editor editor = getSharedPreferences("SESSION", MODE_PRIVATE).edit();
                 editor.clear();
                 editor.apply();
+
+                //Hapus tabel troli dari sqlite
                 Troli.deleteAll(Troli.class);
                 Troli.executeQuery("DELETE FROM SQLITE_SEQUENCE WHERE NAME = 'TROLI'");
+
+                //Intent untuk pindah activity ke LoginActivity
                 Intent intent = new Intent(MainActivity.this, loginutama.class);
                 startActivity(intent);
                 finish();
@@ -125,8 +133,10 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        //Ketika icon troli di klik
         if (id == R.id.action_cart) {
+
+            //Intent untuk pindah activity ke TroliActivity
             Intent intent = new Intent(MainActivity.this, TroliActivity.class);
             startActivity(intent);
             return true;
