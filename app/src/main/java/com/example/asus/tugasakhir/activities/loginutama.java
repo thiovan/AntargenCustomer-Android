@@ -61,7 +61,7 @@ public class loginutama extends AppCompatActivity {
                     Login login = response.body().getData();
 
                     //Memanggil fungsi simpan session login dengan parameter nama dan email
-                    saveSession(login.getName(), login.getEmail());
+                    saveSession(login.getId(), login.getName(), login.getEmail());
 
                     //Intent untuk pindah activity ke MainActivity
                     Intent intent = new Intent(loginutama.this,MainActivity.class);
@@ -79,8 +79,9 @@ public class loginutama extends AppCompatActivity {
     }
 
     //Fungsi simpan session login ke shared preference
-    public void saveSession(String name, String email){
+    public void saveSession(String id, String name, String email){
         SharedPreferences.Editor editor = getSharedPreferences("SESSION", MODE_PRIVATE).edit();
+        editor.putString("ID", id );
         editor.putString("NAME", name );
         editor.putString("EMAIL", email );
         editor.apply();
@@ -90,7 +91,7 @@ public class loginutama extends AppCompatActivity {
     //Return true ketika session login tidak kosong
     public boolean isLogin (){
         SharedPreferences preferences = getSharedPreferences("SESSION",MODE_PRIVATE);
-        return !preferences.getString("EMAIL", "").equals("");
+        return !preferences.getString("ID", "").equals("");
     }
 
 }

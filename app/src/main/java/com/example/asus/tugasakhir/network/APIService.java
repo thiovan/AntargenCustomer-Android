@@ -1,7 +1,9 @@
 package com.example.asus.tugasakhir.network;
 
+import com.example.asus.tugasakhir.models.KurirResponse;
 import com.example.asus.tugasakhir.models.LoginResponse;
 import com.example.asus.tugasakhir.models.ProdukResponse;
+import com.google.gson.JsonObject;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -34,4 +36,19 @@ public interface APIService {
 
     @GET("api/krt")
     Call<ProdukResponse> getKrt();
+
+    @FormUrlEncoded
+    @POST("api/pesanan")
+    Call<JsonObject> addPesanan(
+            @Field("id_user") String id_user,
+            @Field("id_kurir") String id_kurir,
+            @Field("id_produk") String id_produk,
+            @Field("alamat_pesanan") String alamat_pesanan,
+            @Field("total") String total,
+            @Field("status_pesanan") String status_pesanan,
+            @Field("telp_pesanan") String telp_pesanan,
+            @Field("jumlah") String jumlah);
+
+    @GET("api/kurir")
+    Call<KurirResponse> getAllKurir();
 }

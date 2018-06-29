@@ -12,7 +12,7 @@ import com.example.asus.tugasakhir.R;
 public class splashscreen extends AppCompatActivity {
 
     //Set waktu lama splashscreen
-    private static int splashInterval = 2000;
+    private static int splashInterval = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
