@@ -2,6 +2,7 @@ package com.example.asus.tugasakhir.network;
 
 import android.content.Context;
 
+import com.example.asus.tugasakhir.config.URLConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -13,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RetrofitClient {
-    public static final String BASE_URL = "http://antargen.ktpsapi.com/public/";
+    public static final String BASE_URL = URLConfig.BASE_URL;
     private static Retrofit retrofit = null;
     // variable to hold context
     private static Context context;

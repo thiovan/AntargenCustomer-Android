@@ -7,11 +7,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.asus.tugasakhir.R;
 import com.example.asus.tugasakhir.activities.ProdukDetailActivity;
+import com.example.asus.tugasakhir.config.URLConfig;
 import com.example.asus.tugasakhir.models.Produk;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -20,6 +23,7 @@ public class ProdukAdapter extends RecyclerView.Adapter<ProdukAdapter.MyViewHold
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tnama, tharga, tstok;
+        ImageView tfoto;
         CardView tcontainer;
 
         public MyViewHolder(View view) {
@@ -27,6 +31,7 @@ public class ProdukAdapter extends RecyclerView.Adapter<ProdukAdapter.MyViewHold
             tnama = (TextView) itemView.findViewById(R.id.Nama_Produk);
             tharga = (TextView) itemView.findViewById(R.id.Harga);
             tstok = (TextView) itemView.findViewById(R.id.Stok);
+            tfoto = (ImageView) itemView.findViewById(R.id.gambar);
             tcontainer = (CardView) itemView.findViewById(R.id.container);
         }
     }
@@ -58,9 +63,16 @@ public class ProdukAdapter extends RecyclerView.Adapter<ProdukAdapter.MyViewHold
                 intent.putExtra("HARGA", produk.getHarga());
                 intent.putExtra("STOK", produk.getStok());
                 intent.putExtra("KATEGORI", produk.getKategori());
+                intent.putExtra("FOTO", produk.getFoto());
+                intent.putExtra("ID", produk.getId_produk());
                 mContext.startActivity(intent);
             }
         });
+
+        if (!produk.getFoto().equals("")){
+            String url = URLConfig.FOTO_URL + produk.getFoto().replaceAll(" ", "%20");
+            Picasso.get().load(url).into(holder.tfoto);
+        }
     }
 
     @Override

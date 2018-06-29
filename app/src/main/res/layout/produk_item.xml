@@ -16,8 +16,8 @@
             android:id="@+id/gambar"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_marginBottom="4dp"
             android:src="@drawable/ic_shopping_basket"
-            android:tint="@color/colorPrimary"
             android:layout_centerHorizontal="true" />
         <TextView
             android:id="@+id/Nama_Produk"

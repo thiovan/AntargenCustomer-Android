@@ -16,6 +16,12 @@ public class Produk {
     @SerializedName("harga")
     @Expose
     public String harga;
+    @SerializedName("id")
+    @Expose
+    public String id_produk;
+    @SerializedName("foto")
+    @Expose
+    public String foto;
 
     public String getNamaProduk() {
         return namaProduk;
@@ -31,5 +37,13 @@ public class Produk {
 
     public String getHarga() {
         return harga;
+    }
+
+    public String getId_produk() {
+        return id_produk;
+    }
+
+    public String getFoto() {
+        return foto;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.asus.tugasakhir.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -13,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.asus.tugasakhir.R;
 import com.example.asus.tugasakhir.fragments.HalamanKRT;
@@ -20,6 +23,7 @@ import com.example.asus.tugasakhir.fragments.HalamanKesehatan;
 import com.example.asus.tugasakhir.fragments.HalamanMakanan;
 import com.example.asus.tugasakhir.fragments.HalamanMinuman;
 import com.example.asus.tugasakhir.fragments.HalamanUtama;
+import com.example.asus.tugasakhir.models.Troli;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,6 +46,13 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         displaySelectedScreen(R.id.nav_utama);
+
+        SharedPreferences preferences = getSharedPreferences("SESSION",MODE_PRIVATE);
+        View headerView = navigationView.getHeaderView(0);
+        TextView headerNama = (TextView) headerView.findViewById(R.id.header_nama);
+        TextView headerEmail = (TextView) headerView.findViewById(R.id.header_email);
+        headerNama.setText(preferences.getString("NAME", ""));
+        headerEmail.setText(preferences.getString("EMAIL", ""));
     }
 
     public void displaySelectedScreen(int itemId){
@@ -60,6 +71,16 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_obat:
                 fragment = new HalamanKesehatan();
+                break;
+            case R.id.nav_logout:
+                SharedPreferences.Editor editor = getSharedPreferences("SESSION", MODE_PRIVATE).edit();
+                editor.clear();
+                editor.apply();
+                Troli.deleteAll(Troli.class);
+                Troli.executeQuery("DELETE FROM SQLITE_SEQUENCE WHERE NAME = 'TROLI'");
+                Intent intent = new Intent(MainActivity.this, loginutama.class);
+                startActivity(intent);
+                finish();
                 break;
             case R.id.nav_alat:
                 fragment = new HalamanKRT();
@@ -82,7 +103,11 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            //super.onBackPressed();
         }
     }
 
