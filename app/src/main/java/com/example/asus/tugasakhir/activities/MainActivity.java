@@ -75,6 +75,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_obat:
                 fragment = new HalamanKesehatan();
                 break;
+            case R.id.nav_pesanan:
+                startActivity(new Intent(MainActivity.this, PesananSayaActivity.class));
+                break;
             case R.id.nav_logout:
                 //Hapus session login dari shared preference
                 SharedPreferences.Editor editor = getSharedPreferences("SESSION", MODE_PRIVATE).edit();

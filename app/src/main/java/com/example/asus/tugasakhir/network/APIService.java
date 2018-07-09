@@ -2,6 +2,7 @@ package com.example.asus.tugasakhir.network;
 
 import com.example.asus.tugasakhir.models.KurirResponse;
 import com.example.asus.tugasakhir.models.LoginResponse;
+import com.example.asus.tugasakhir.models.PesananResponse;
 import com.example.asus.tugasakhir.models.ProdukResponse;
 import com.google.gson.JsonObject;
 
@@ -10,6 +11,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * Created by ASUS on 5/24/2018.
@@ -51,4 +53,7 @@ public interface APIService {
 
     @GET("api/kurir")
     Call<KurirResponse> getAllKurir();
+
+    @GET("api/pesanan/{id}")
+    Call<PesananResponse> getPesanan(@Path("id") int id);
 }

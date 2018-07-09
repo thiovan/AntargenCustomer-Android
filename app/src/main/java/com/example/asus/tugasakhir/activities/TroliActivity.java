@@ -188,7 +188,7 @@ public class TroliActivity extends AppCompatActivity {
                     mButtonPengiriman.setEnabled(true);
                     mButtonPengiriman.setText("lanjutkan ke pengiriman");
                     Troli.deleteAll(Troli.class);
-                    Toast.makeText(TroliActivity.this, "Pesanan Anda Telah Kami Diproses", Toast.LENGTH_LONG).show();
+                    Toast.makeText(TroliActivity.this, "Pesanan Anda Telah Kami Proses", Toast.LENGTH_LONG).show();
                     TroliActivity.this.recreate();
                 }
             }

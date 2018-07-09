@@ -23,7 +23,9 @@
         android:id="@+id/et_alamat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="top"
         android:layout_marginBottom="4dp"
+        android:lines="3"
         android:inputType="textMultiLine"
         android:hint="Alamat Pengiriman"/>
 
