@@ -1,15 +1,15 @@
 package com.example.asus.tugasakhir.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.asus.tugasakhir.R;
+import com.example.asus.tugasakhir.activities.PosisiKurirActivity;
 import com.example.asus.tugasakhir.models.Pesanan;
 
 import java.util.List;
@@ -25,7 +25,6 @@ public class PesananAdapter extends RecyclerView.Adapter<PesananAdapter.MyViewHo
         TextView mTvJumlah;
         TextView mTvStatus;
         TextView mLacakKurir;
-        TextView mSelesai;
 
         public MyViewHolder(View view) {
             super(view);
@@ -36,7 +35,6 @@ public class PesananAdapter extends RecyclerView.Adapter<PesananAdapter.MyViewHo
             mTvJumlah = (TextView) itemView.findViewById(R.id.tv_jumlah);
             mTvStatus = (TextView) itemView.findViewById(R.id.tv_status);
             mLacakKurir = (TextView) itemView.findViewById(R.id.lacak_kurir);
-            mSelesai = (TextView) itemView.findViewById(R.id.selesai);
 
         }
 
@@ -56,7 +54,7 @@ public class PesananAdapter extends RecyclerView.Adapter<PesananAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        Pesanan pesanan = pesananList.get(position);
+        final Pesanan pesanan = pesananList.get(position);
         final Context mContext = holder.mTvKode.getContext();
 
         holder.mTvKode.setText("Pesanan #" + pesanan.getKodePesanan());
@@ -81,23 +79,23 @@ public class PesananAdapter extends RecyclerView.Adapter<PesananAdapter.MyViewHo
             }
         }
         holder.mTvJumlah.setText(valueTotal);
-        if (pesanan.getStatus().equals("0")){
+        if (pesanan.getStatus().equals("0")) {
             holder.mTvStatus.setText("Sedang Diproses");
         } else if (pesanan.getStatus().equals("1")){
+            holder.mTvStatus.setText("Pickup Barang");
+        } else if (pesanan.getStatus().equals("2")){
             holder.mTvStatus.setText("Dalam Pengiriman");
             holder.mLacakKurir.setVisibility(View.VISIBLE);
             holder.mLacakKurir.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast toast = Toast.makeText(mContext, "Fitur ini sedang dalam tahap pengembangan", Toast.LENGTH_SHORT);
-                    TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
-                    if( v != null) v.setGravity(Gravity.CENTER);
-                    toast.show();
+                    Intent intent = new Intent(mContext, PosisiKurirActivity.class);
+                    intent.putExtra("ID_KURIR", pesanan.getIdKurir());
+                    mContext.startActivity(intent);
                 }
             });
         } else {
             holder.mTvStatus.setText("Telah Diterima");
-            holder.mSelesai.setVisibility(View.VISIBLE);
         }
 
     }
