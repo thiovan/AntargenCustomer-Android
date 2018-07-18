@@ -28,4 +28,6 @@
     <string name="lanjutkan">Lanjutkan</string>
     <string name="lanjutkan_ke_pengiriman">Lanjutkan Ke Pengiriman</string>
     <string name="title_activity_posisi_kurir">Map</string>
+    <string name="title_activity_lacak_posisi">Map</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

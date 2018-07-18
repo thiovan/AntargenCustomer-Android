@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey"
-    tools:context="com.example.asus.tugasakhir.fragments.HalamanMakanan">
+    tools:context="com.example.asus.tugasakhir2.fragments.HalamanMakanan">
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swiperefresh"
         android:layout_below="@id/toolbar"

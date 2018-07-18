@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.asus.tugasakhir">
+    package="com.example.asus.tugasakhir2">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -74,7 +74,7 @@
 
         <activity
             android:name=".activities.PosisiKurirActivity"
-            android:label="@string/title_activity_posisi_kurir"></activity>
+            android:label="@string/title_activity_posisi_kurir" />
     </application>
 
 </manifest>
